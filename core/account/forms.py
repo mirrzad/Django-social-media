@@ -32,3 +32,8 @@ class RegisterForm(forms.Form):
 
         if p1 != p2:
             raise ValidationError('Passwords doesn\'t match!')
+
+
+class LoginForm(forms.Form):
+    username = forms.CharField(label='Username or Email', widget=forms.TextInput(attrs={'class': 'form-control'}))
+    password = forms.CharField(widget=forms.PasswordInput(attrs={'class': 'form-control'}))
