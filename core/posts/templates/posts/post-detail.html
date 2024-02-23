@@ -6,6 +6,7 @@
     {% if request.user.id == post.user.id %}
         <p>
             <a href="{% url 'posts:post-delete' post.id %}" class="btn btn-danger" >Delete</a>
+            <a href="{% url 'posts:post-update' post.id %}" class="btn btn-info" >Update</a>
         </p>
     {% endif %}
     <p><a href="{% url 'account:profile-page' post.user.id %}">{{post.user.username}}</a> - {{post.updated_time|date:'d M Y'}}</p>

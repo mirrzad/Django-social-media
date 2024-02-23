@@ -6,6 +6,7 @@ from .forms import RegisterForm, LoginForm
 from django.contrib.auth.models import User
 from django.contrib import messages
 from django.contrib.auth.mixins import LoginRequiredMixin
+from django.http import Http404
 
 
 class UserRegisterView(View):
@@ -65,7 +66,7 @@ class UserLoginView(View):
 class UserLogoutView(LoginRequiredMixin, View):
     def get(self, request):
         logout(request)
-        messages.success(request, 'You are logged out successfully')
+        messages.success(request, 'You are logged out successfully', 'success')
         return redirect('home:home-page')
 
 
@@ -73,5 +74,9 @@ class UserProfileView(View):
     template_name = 'account/profile.html'
 
     def get(self, request, user_id):
-        user = User.objects.prefetch_related('posts').get(pk=user_id)
-        return render(request, self.template_name, {'user': user})
+        try:
+            user = User.objects.prefetch_related('posts').get(pk=user_id)
+            return render(request, self.template_name, {'user': user})
+        except User.DoesNotExist:
+            raise Http404
+
