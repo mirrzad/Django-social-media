@@ -1,15 +1,14 @@
-{% extends 'base.html' %}
+{% extends 'base.html'%}
 
-{% block title %}Home Page{% endblock %}
+{% block title %}Profile{% endblock %}
 
 {% block content %}
-    <div class="card">
-        {% for post in posts %}
+  <h2 class="text-center">{{user.username}}</h2>
+   <div class="card">
+        {% for post in user.posts.all %}
             <p class="card-body">
                 <a href="{{ post.get_absolute_url }}">{{post.body|truncatewords_html:10}}</a>
             </p>
         {% endfor %}
     </div>
-
 {% endblock %}
-

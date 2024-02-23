@@ -45,7 +45,7 @@ class UserLoginView(View):
         return super().dispatch(request, *args, **kwargs)
 
     def get(self, request):
-        form = self.form_class
+        form = self.form_class()
         return render(request, self.template_name, {'form': form})
 
     def post(self, request):
@@ -65,5 +65,13 @@ class UserLoginView(View):
 class UserLogoutView(LoginRequiredMixin, View):
     def get(self, request):
         logout(request)
-        messages.success(request, 'You are logged out in successfully')
+        messages.success(request, 'You are logged out successfully')
         return redirect('home:home-page')
+
+
+class UserProfileView(View):
+    template_name = 'account/profile.html'
+
+    def get(self, request, user_id):
+        user = User.objects.prefetch_related('posts').get(pk=user_id)
+        return render(request, self.template_name, {'user': user})

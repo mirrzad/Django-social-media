@@ -42,6 +42,7 @@ INSTALLED_APPS = [
 
     'home.apps.HomeConfig',
     'account.apps.AccountConfig',
+    'posts.apps.PostsConfig'
 ]
 
 MIDDLEWARE = [
