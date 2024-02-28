@@ -11,6 +11,9 @@ class Post(models.Model):
     created_time = models.DateTimeField(auto_now=True)
     updated_time = models.DateTimeField(auto_now_add=True)
 
+    class Meta:
+        ordering = ('-created_time',)
+
     def __str__(self):
         return self.slug
 

@@ -5,9 +5,19 @@
 {% block content %}
   <h2 class="text-center">{{user.username}}</h2>
 
-    {% if request.user.id == user.id%}
+    {% if request.user.id == user.id %}
         <p>
             <a href="{% url 'posts:post-create' %}" class="btn btn-primary">Create Post</a>
+        </p>
+    {% endif %}
+
+    {% if request.user.id != user.id and not is_following %}
+        <p>
+            <a class="btn btn-info" href="{% url 'account:user-follow' user.id %}">Follow</a>
+        </p>
+    {% elif request.user.id != user.id and is_following %}
+        <p>
+            <a class="btn btn-info" href="{% url 'account:user-unfollow' user.id %}">Unfollow</a>
         </p>
     {% endif %}
 

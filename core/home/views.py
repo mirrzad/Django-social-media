@@ -7,5 +7,5 @@ class HomeView(View):
     template_name = 'home/index.html'
 
     def get(self, request):
-        posts = Post.objects.all().order_by('-updated_time')
+        posts = Post.objects.all()
         return render(request, self.template_name, {'posts': posts})

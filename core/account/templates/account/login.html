@@ -1,6 +1,7 @@
 {% extends 'base.html'%}
 
 {% block title %}Login Page{% endblock %}
+
 {% block content %}
 
 <form method="post" class="col-md-4">
@@ -8,5 +9,9 @@
     {{ form.as_p }}
     <input type="submit" value="Login">
 </form>
+<br>
+<p>
+    <a href="{% url 'account:password-reset' %}">forgot password?</a>
+</p>
 
 {% endblock %}
