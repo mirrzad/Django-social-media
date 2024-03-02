@@ -10,7 +10,40 @@
         </p>
     {% endif %}
     <p><a href="{% url 'account:profile-page' post.user.id %}">{{post.user.username}}</a> - {{post.updated_time|date:'d M Y'}}</p>
-    <p>{{post.body}}</p>
+    <p>{{post.body}}</p><hr>
+
+    {% if request.user.is_authenticated %}
+        <form class="col-md-8" action="" method="post">
+            {% csrf_token %}
+            {{ form.as_p }}
+            <input type="submit" value="Send">
+        </form>
+    {% else %}
+        <p>
+            <a href="{% url 'account:login-page' %}">
+                Login to put comment.
+            </a>
+        </p>
+    {% endif %}<hr>
+
+    <h5>Comments</h5>
+    {% for comment in comments %}
+    <div class="card col-md-8">
+        <p class="card-header bg-dark text-white ">{{comment.user}} | {{ comment.created_time|timesince }}
+            <a href="{% url 'posts:comment-reply' post.id comment.id %}" class="btn btn-danger btn-sm " style="float:right;" >reply</a>
+        </p>
+
+        <p class="card-body">{{ comment.body }}</p>
+        {% for rep in comment.replies.all %}
+            <p class="card-header bg-light">
+                {{rep.user}} | reply to {% if rep.reply_to_reply.id %} {{ rep.reply_to_reply.user }} {% else %} {{ rep.reply.user }} {% endif %}
+                <a href="{% url 'posts:reply-reply' post.id comment.id rep.id %}" class="btn btn-danger btn-sm " style="float:right;" >reply</a>
+            </p>
+            <p class="card-body bg-transparent">{{ rep.body }}</p>
+        {% endfor %}
+    </div><br>
+    {% empty %}
+        <p>No comments yet!</p>
+    {% endfor%}
 
 {% endblock %}
-
