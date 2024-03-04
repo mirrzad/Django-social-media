@@ -15,4 +15,5 @@ urlpatterns = [
     path('password_reset_complete/', views.UserPasswordResetCompleteView.as_view(), name='password-reset-complete'),
     path('follow/<int:user_id>/', views.UserFollowView.as_view(), name='user-follow'),
     path('unfollow/<int:user_id>/', views.UserUnfollowView.as_view(), name='user-unfollow'),
+    path('edit-user/', views.EditUserProfile.as_view(), name='edit-user-profile')
 ]
