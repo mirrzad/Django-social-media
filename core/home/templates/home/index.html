@@ -3,10 +3,22 @@
 {% block title %}Home Page{% endblock %}
 
 {% block content %}
+    <h4 class="card-header" style="text-align: center; margin-bottom: 20px;"><a href="{% url 'home:home-page' %}" style="text-decoration: none;">All Posts</a></h4>
+    <p>
+       <form action="" method="get" class="col-md-3">
+        {% for field in form %}
+            {{field}}
+        {% endfor %}
+        <br>
+        <input type="submit" value="search" class="btn btn-primary ">
+        </form>
+
+    </p>
+
     <div class="card">
         {% for post in posts %}
-            <p class="card-body">
-                <a href="{{ post.get_absolute_url }}">{{post.body|truncatewords_html:10}}</a>
+            <p class="card-body bg-light">
+                <a href="{{ post.get_absolute_url }}" style="text-decoration: none;">{{post.body|truncatewords_html:7}}</a>
             </p>
         {% endfor %}
     </div>

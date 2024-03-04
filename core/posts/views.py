@@ -1,6 +1,6 @@
 from django.shortcuts import render, redirect, get_object_or_404
 from django.views import View
-from .models import Post, Comment
+from .models import Post, Comment, Like
 from django.contrib.auth.mixins import LoginRequiredMixin
 from django.contrib import messages
 from .forms import PostCreateUpdateForm, CommentCreateForm, CommentReplyForm
@@ -19,11 +19,15 @@ class PostDetailView(View):
 
     def get(self, request, post_id, post_slug):
         comments = self.post_instance.pcomments.filter(is_reply=False)
+        is_like_allowed = False
+        if request.user.is_authenticated and self.post_instance.like_is_allowed(request.user):
+            is_like_allowed = True
         return render(request, self.template_name,
                       {
                         'post': self.post_instance,
                         'comments': comments,
                         'form': self.form_class,
+                        'is_like_allowed': is_like_allowed
                       })
 
     @method_decorator(login_required())
@@ -149,3 +153,13 @@ class PostReplyToReplyView(LoginRequiredMixin, View):
             messages.success(request, 'Your reply submitted successfully!', 'success')
             return redirect('posts:post-detail', post.id, post.slug)
 
+
+class PostLikeView(LoginRequiredMixin, View):
+    def get(self, request, post_id):
+        post = get_object_or_404(Post, id=post_id)
+        if Like.objects.filter(post=post, user=request.user).exists():
+            messages.error(request, 'You already liked this post!', 'danger')
+        else:
+            Like.objects.create(user=request.user, post=post)
+            messages.success(request, 'You liked this post!', 'success')
+        return redirect('posts:post-detail', post.id, post.slug)

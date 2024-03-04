@@ -1,5 +1,5 @@
 from django.contrib import admin
-from .models import Post, Comment
+from .models import Post, Comment, Like
 
 
 class PostAdmin(admin.ModelAdmin):
@@ -14,5 +14,11 @@ class CommentAdmin(admin.ModelAdmin):
     raw_id_fields = ('user', 'post', 'reply')
 
 
+class LikeAdmin(admin.ModelAdmin):
+    list_display = ('user', 'post')
+    raw_id_fields = ('user', 'post')
+
+
 admin.site.register(Post, PostAdmin)
 admin.site.register(Comment, CommentAdmin)
+admin.site.register(Like, LikeAdmin)

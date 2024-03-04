@@ -36,3 +36,10 @@ class CommentReplyForm(forms.ModelForm):
         labels = {
             'body': 'Share your comment'
         }
+
+
+class SearchForm(forms.Form):
+    search = forms.CharField(
+        max_length=300,
+        widget=forms.TextInput(attrs={'class': 'form-control', 'placeholder': 'search your keyword'})
+    )

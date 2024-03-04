@@ -24,7 +24,7 @@
    <div class="card">
         {% for post in user.posts.all %}
             <p class="card-body">
-                <a href="{{ post.get_absolute_url }}">{{post.body|truncatewords_html:10}}</a>
+                <a href="{{ post.get_absolute_url }} " style="text-decoration: none;">{{post.body|truncatewords_html:10}}</a>
             </p>
         {% endfor %}
     </div>
