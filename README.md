@@ -1,7 +1,7 @@
 <!-- ABOUT THE PROJECT -->
 ## About The Project
 
-A Blog application implemented with Django class based views. 
+A social-media application implemented with Django. 
 
 
 <!-- GETTING STARTED -->
