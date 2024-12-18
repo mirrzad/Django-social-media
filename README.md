@@ -21,7 +21,13 @@ command bellow in the same directory of docker-compose.yml file.
  ```sh
   docker-compose up --build
   ```
-then open the url below and now you can reach the index page of the app.
+then run the following command to apply database migrations.
+
+ ```sh
+  docker-compose exec backend sh -c "python manage.py migrate"
+  ```
+
+Now open the url below and you can reach the index page of the app.
 
 * http://127.0.0.1:8000
 
